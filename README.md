@@ -1,5 +1,5 @@
 @'
-# Portfolio de Leandro
+# Portfolio de Leandro Martinez
 
 Stack: Next.js 15 + TypeScript + Tailwind.
 
