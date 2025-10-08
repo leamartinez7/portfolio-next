@@ -3,15 +3,17 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useMemo } from "react";
+import { useLang } from "./providers";
 
 const links = [
-  { href: "/", label: "Inicio" },
-  { href: "/proyectos", label: "Proyectos" },
-  { href: "/contacto", label: "Contacto" },
+  { href: "/", label: { es: "Inicio", en: "Home" } },
+  { href: "/proyectos", label: { es: "Proyectos", en: "Projects" } },
+  { href: "/contacto", label: { es: "Contacto", en: "Contact" } },
 ];
 
 export default function Nav() {
   const pathname = usePathname();
+  const { lang } = useLang();
 
   const items = useMemo(
     () =>
@@ -22,17 +24,21 @@ export default function Nav() {
     [pathname]
   );
 
+  const base =
+    "btn btn-ghost px-3 py-1.5"; // pill ghost (borde + hover sutil)
+  const active =
+    "bg-black text-white border-transparent dark:bg-white dark:text-black"; // estado activo
+
   return (
-    <ul className="flex gap-4">
+    <ul className="flex gap-2">
       {items.map((l) => (
         <li key={l.href}>
           <Link
             href={l.href}
-            className={`px-2 py-1 rounded-md transition-colors ${
-              l.active ? "bg-neutral-900 text-white" : "hover:bg-neutral-200"
-            }`}
+            aria-current={l.active ? "page" : undefined}
+            className={`${base} ${l.active ? active : ""}`}
           >
-            {l.label}
+            {l.label[lang]}
           </Link>
         </li>
       ))}
